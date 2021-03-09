@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1615290996922.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2874866067",
+    "id" : "EB19DF00",
+    "lastKnownWriteTime" : 1575440642,
+    "last_content_update" : 1575440642,
+    "path" : "C:/Users/mrswi/Desktop/Projekt Mag/Eksplorator danych 2/DataExploratoryApp/server.R",
+    "project_path" : "DataExploratoryApp/server.R",
+    "properties" : {
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
