@@ -29,7 +29,7 @@ shinyServer(function(input, output, session) {
   })
   
   updateValues <- reactive({
-    # Aktualizuje wartosi zmiennych (TO DO)
+    # Aktualizuje wartosci zmiennych (TO DO)
     return (NULL)
   })
   
@@ -62,4 +62,16 @@ shinyServer(function(input, output, session) {
     dataset$original
   })
 
+  output$menuVisualise <- renderMenu({
+    # renderuje sidebar menu dla zakladki 'wizualizacja'
+    menuItem(
+      text = 'Wizualizacja', tabName = 'menuVisualise', icon = icon('chart-area'),
+      menuSubItem('Histogram', tabName = 'menuHist'),
+      menuSubItem('Wykres rozrzutu', tabName = 'menuScatter'),
+      menuSubItem('Wykres pudelkowy', tabName = 'menuBoxplot'))
+  })
+  
+  
+  
+  
 })

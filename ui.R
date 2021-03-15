@@ -4,6 +4,8 @@ library(shinydashboard)
 shinyUI(
   shinydashboard::dashboardPage(
     
+    ######### HEADER #########
+    
     shinydashboard::dashboardHeader(
       title = 'Eksplorator Danych',
       titleWidth = 300,
@@ -17,6 +19,8 @@ shinyUI(
         class = 'dropdown'
       )
     ),
+    
+    ######### SIDEBAR #########
     
     shinydashboard::dashboardSidebar(
       width = 300,
@@ -76,12 +80,58 @@ shinyUI(
         selected = '.'
       ),
       
-      actionButton('load.again', 'Zaladuj ponownie', width = 180)
+      actionButton('load.again', 'Zaladuj ponownie', width = 180),
+      
+      shinydashboard::sidebarMenu(id = 'sidebar',
+        menuItem(text = 'Home', tabName = 'menuHome', icon = icon('home')),
+        menuItem(text = 'Eksploracja', tabName = 'menuExplore', icon = icon('map')),
+        menuItemOutput('menuVisualise'),
+        menuItem(text = 'Informacje o aplikacji', tabName = 'menuInfo', icon = icon('info-circle'))
+      )
     ),
     
-    shinydashboard::dashboardBody(
-      DT::DTOutput('render.table')
-    )
+    ######### BODY #########
     
+    shinydashboard::dashboardBody(
+      shinydashboard::tabItems(
+        
+        ###### HOME ######
+        
+        tabItem(tabName = 'menuHome'
+          #
+        ),
+        
+        ###### EKSPLORACJA ######
+        
+        tabItem(tabName = 'menuExplore',
+          DT::DTOutput('render.table')
+        ),
+        
+        ###### WIZUALIZACJA ######
+        
+        tabItem(tabName = 'menuVisualise'
+          #
+        ),
+        
+        tabItem(tabName = 'menuHist'
+          #
+        ),
+        
+        tabItem(tabName = 'menuScatter'
+          #
+        ),
+        
+        tabItem(tabName = 'menuBoxplot'
+          #
+        ),
+        
+        ###### INFO ######
+        
+        tabItem(tabName = 'menuInfo'
+          #
+        )
+        
+      )
+    )
   )
 )
