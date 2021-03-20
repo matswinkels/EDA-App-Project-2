@@ -1,6 +1,15 @@
 library(shiny)
 library(shinydashboard)
 
+options(DT.options = list(
+  # Opcje renderowania ramki danych z pakietu DT
+  pageLength = 10,
+  language = list(search = 'Filtruj:'),
+  lengthChange = FALSE,
+  editable = 'all',
+  selection = 'none'
+  ))
+
 shinyUI(
   shinydashboard::dashboardPage(
     
@@ -104,7 +113,34 @@ shinyUI(
         ###### EKSPLORACJA ######
         
         tabItem(tabName = 'menuExplore',
-          DT::DTOutput('render.table')
+          column(width=12,
+                 
+            shinydashboard::box(width=12, height = 525,
+              DT::DTOutput('render.table')
+            )
+          ),
+          
+          column(width=12,
+            shinydashboard::box(width=4, height = 300, title = 'Wybor zmiennej', 
+              
+              selectInput(
+                inputId = 'expl.select.col',
+                label = NULL,
+                choices = c(),
+                multiple = FALSE,
+                width = '100%'
+              )
+              
+              # actionButton('expl.apply.col', label = 'Potwierdz')
+              
+            ),
+            
+            shinydashboard::box(width=8, height = 300, 
+              
+              verbatimTextOutput('summary')
+            )
+          )
+          
         ),
         
         ###### WIZUALIZACJA ######

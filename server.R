@@ -3,7 +3,9 @@ library(shiny)
 shinyServer(function(input, output, session) {
   
   dataset <- reactiveValues(
-    original = NULL
+    original = NULL,
+    columns = NULL,
+    col.selected = NULL
   )
   
   observeEvent(input$input.file, {
@@ -17,6 +19,7 @@ shinyServer(function(input, output, session) {
           sep = input$sep,
           dec = input$dec)
         
+        dataset$columns <- colnames(dataset$original)
       },
       warning = function(warn){
         showNotification(paste0(warn), type = 'warning', duration = 10, closeButton = TRUE)
@@ -43,6 +46,8 @@ shinyServer(function(input, output, session) {
           stringsAsFactors = input$stringAsFactors,
           sep = input$sep,
           dec = input$dec)
+        
+        dataset$columns <- colnames(dataset$original)
   
       },
       warning = function(warn){
@@ -62,6 +67,7 @@ shinyServer(function(input, output, session) {
     dataset$original
   })
 
+
   output$menuVisualise <- renderMenu({
     # renderuje sidebar menu dla zakladki 'wizualizacja'
     menuItem(
@@ -71,7 +77,29 @@ shinyServer(function(input, output, session) {
       menuSubItem('Wykres pudelkowy', tabName = 'menuBoxplot'))
   })
   
+  observe({
+    # Aktualizuje liste nazw kolumn w zakladce eksploracja
+    updateSelectInput(
+      session,
+      inputId = 'expl.select.col',
+      choices = dataset$columns
+    )
+  })
   
+  # observeEvent(input$expl.apply.col, {
+  #   # Obsluguje przycisk do potwierdzenia wyboru kolumny w zakladce eksploracja
+  #   if (!is.null(input$expl.select.col)) {
+  #     dataset$col.selected <- input$expl.select.col
+  #   }
+  # })
+  
+  output$summary <- renderPrint({
+    # Renderuje podsumowanie wybranej zmiennej
+    if (!is.null(dataset$original)) {
+      column <- dataset$original[input$expl.select.col]
+      summary(column)
+    }
+  })
   
   
 })
