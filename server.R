@@ -1,4 +1,5 @@
 library(shiny)
+library(ggplot2)
 
 shinyServer(function(input, output, session) {
   
@@ -99,6 +100,38 @@ shinyServer(function(input, output, session) {
       column <- dataset$original[input$expl.select.col]
       summary(column)
     }
+  })
+  
+  #### HISTOGRAM
+  
+  output$histogram <- renderPlotly({
+    plotly::ggplotly(
+      
+      if (input$hist.type == 'count') {
+        ggplot(iris) +
+          geom_histogram(
+            aes(x = Petal.Length, y = ..count..), 
+            bins = input$hist.bins
+          ) +
+          scale_x_continuous(breaks = seq(1,7,by=1))
+      }
+      else {
+        ggplot(iris) +
+          geom_histogram(
+            aes(x = Petal.Length, y = ..density..), 
+            bins = input$hist.bins
+          ) +
+          scale_x_continuous(breaks = seq(1,7,by=1))
+      }
+      
+      
+      
+      
+    )
+    
+    
+    
+    
   })
   
   

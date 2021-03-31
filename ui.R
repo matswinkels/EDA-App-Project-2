@@ -1,5 +1,7 @@
 library(shiny)
 library(shinydashboard)
+library(ggplot2)
+library(plotly)
 
 options(DT.options = list(
   # Opcje renderowania ramki danych z pakietu DT
@@ -146,11 +148,41 @@ shinyUI(
         ###### WIZUALIZACJA ######
         
         tabItem(tabName = 'menuVisualise'
-          #
+          #pass
         ),
         
-        tabItem(tabName = 'menuHist'
-          #
+        tabItem(tabName = 'menuHist',
+                
+          fluidRow(
+            h2("Histogram"),
+            p('Jeden z graficznych sposobów przedstawiania rozkładu empirycznego cechy. Składa się z szeregu prostokątów umieszczonych na osi współrzędnych.')
+          ),
+          fluidRow(
+            tabBox(
+              width = 12, height = 250,
+              
+              column(
+                width=6,
+                numericInput('hist.bins', 'Number of bins', 30),
+                selectInput(
+                  'hist.type', 
+                  'Type of histogram',
+                  choices = c('count', 'density'),
+                  selected = 'count'
+                )
+              )
+              
+            )
+          ),
+          fluidRow(
+            tabBox(
+              width = 12, height = 800,
+              tabPanel(
+                title='Histogram 1',
+                plotlyOutput('histogram')
+              )
+            )
+          )
         ),
         
         tabItem(tabName = 'menuScatter'
